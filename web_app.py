@@ -134,9 +134,13 @@ def delete(index):
     # Go back to homepage
     return redirect("/")
 
-# Start the server
+# Start the Flask server
 if __name__ == "__main__":
-    # host="0.0.0.0" allows phone access on same WiFi
-    # port=5000 is the app port
-    # debug=True auto reloads when you save changes
-    app.run(host="0.0.0.0", port=5000, debug=True)
+
+    # Get port from hosting service
+    # If no port exists locally, default to 5000
+    import os
+    port = int(os.environ.get("PORT", 5000))
+
+    # Run app
+    app.run(host="0.0.0.0", port=port)

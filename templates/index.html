@@ -1,7 +1,7 @@
 <!doctype html>
 <html>
 <head>
-<link rel="stylesheet" href="/static/style.css">
+<link rel="stylesheet " href="/static/style.css">
 <title>Grocery App</title>
 </head>
 
@@ -16,10 +16,16 @@
     </form>
 
     <ul>
-    {% for i in items %}
+    {% for item in items %}
         <li>
-            {{ i }}
-            <a href="/delete/{{ loop.index0 }}">Remove</a>
+             <a href="/toggle/{{ loop.index0 }}">
+                {% if item.done %}
+                    <del>{{ item.name }}</del>
+                {% else %}
+                    {{ item.name }}
+                {% endif %}
+            </a>
+
         </li>
     {% endfor %}
     </ul>

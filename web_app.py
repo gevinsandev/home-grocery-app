@@ -4,14 +4,28 @@
 # request = handles form input
 # redirect = sends user back to homepage after actions
 from flask import Flask, render_template_string, request, redirect
+import json
 
 # Create the app
 # __name__ tells Flask where your app lives
 app = Flask(__name__)
 
-# This is your grocery list stored in memory
-# NOTE: This resets when the server stops
-items = []
+DATA_FILE = "data.json"
+
+# Load items from file
+def load_items():
+    try:
+        with open(DATA_FILE, "r") as file:
+            return json.load(file)
+    except:
+        return []
+
+# Save items to file
+def save_items(items):
+    with open(DATA_FILE, "w") as file:
+        json.dump(items, file)
+
+items = load_items()
 
 # This is your webpage (HTML)
 # Think of this as the "screen" your phone will show
@@ -119,6 +133,7 @@ def add():
     if item and item.strip():
         # Add cleaned item to list
         items.append(item.strip())
+        save_items(items)
 
     # Go back to homepage after adding
     return redirect("/")
@@ -130,6 +145,7 @@ def delete(index):
     if 0 <= index < len(items):
         # Remove item at position
         items.pop(index)
+        save_items(items)
 
     # Go back to homepage
     return redirect("/")
@@ -144,3 +160,5 @@ if __name__ == "__main__":
 
     # Run app
     app.run(host="0.0.0.0", port=port)
+
+

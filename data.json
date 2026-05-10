@@ -1,14 +1,14 @@
-[
-    {
-        "name": "Soy Sauce",
-        "done": true
-    },
-    {
-        "name": "Milk Tea",
-        "done": false
-    },
-    {
-        "name": "Food",
-        "done": false
-    }
-]
+{
+    "active_items": [],
+    "history": [
+        {
+            "date": "10 May 2026",
+            "items": [
+                {
+                    "name": "Food",
+                    "done": true
+                }
+            ]
+        }
+    ]
+}

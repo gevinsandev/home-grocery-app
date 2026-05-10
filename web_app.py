@@ -7,30 +7,40 @@ app = Flask(__name__)
 DATA_FILE = "data.json"
 
 # Load items from file
-def load_items():
+def load_data():
     try:
         with open(DATA_FILE, "r") as file:
             data = json.load(file)
 
-            return (
-                data.get("active_item", []),
-                data.get("history", [])
-            )
+            return {
+                "active_items": data.get("active_item", []),
+                "history": data.get("history", [])
+            }
             
     except:
-        return [], []
+        return {
+            "active_items": [],
+            "history": []
+        }
 
 # Save items to file
-def save_items(items):
+def save_data(data):
     with open(DATA_FILE, "w") as file:
-        json.dump(items, file, indent=4)
+        json.dump(data, file, indent=4)
 
 # Load once when app starts
-items = load_items()
+data = load_data()
+
+items = data["active_items"]
+history = data["history"]
 
 @app.route("/")
 def home():
-    return render_template("index.html", items=items)
+    return render_template(
+        "index.html",
+        items=items,
+        history=history
+        )
 
 @app.route("/add", methods=["POST"])
 def add():
@@ -41,7 +51,8 @@ def add():
             "name": item.strip(),
             "done": False
         })
-        save_items(items)
+
+        save_data(items)
 
     return redirect("/")
 
@@ -49,7 +60,8 @@ def add():
 def delete(index):
     if 0 <= index < len(items):
         items.pop(index)
-        save_items(items)
+
+        save_data(items)
 
     return redirect("/")
 
@@ -57,10 +69,30 @@ def delete(index):
 def toggle(index):
     if 0 <= index < len(items):
         items[index]["done"] = not items[index]["done"]
-        save_items(items)
+
+        save_data(items)
+
+    return redirect("/")
+
+from datetime import datetime
+
+@app.route("/complete")
+def complete():
+   
+    if items:
+
+        history.append({
+            "date": datetime.now().strftime("%d %B %Y"),
+            "items": items.copy()
+        })
+        items.clear()
+
+        save_data(data)
 
     return redirect("/")
 
 if __name__ == "__main__":
     port = int(os.environ.get("PORT", 5000))
     app.run(host="0.0.0.0", port=port)
+
+

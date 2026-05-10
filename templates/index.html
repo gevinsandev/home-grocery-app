@@ -15,6 +15,8 @@
         <button type="submit">Add</button>
     </form>
 
+
+
     <ul>
     {% for item in items %}
         <li>
@@ -25,11 +27,33 @@
                     ⬜ {{ item.name }}
                 {% endif %}
             </a>
-
         </li>
     {% endfor %}
     </ul>
+
+<a href="/complete">
+    <button>Complete!</button>
+</a>
+
 </div>
+
+<h2>Previous Shops</h2>
+
+{% for entry in history %}
+
+<div class="history-card">
+    <strong>{{ entry.date }}</strong>
+
+    <ul>
+        {% for item in entry.items %}
+            <li>{{ item.name }}</li>
+        {% endfor %}
+    </ul>
+
+
+</div>
+
+{% endfor %}
 
 </body>
 </html>

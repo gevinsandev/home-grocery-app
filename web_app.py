@@ -10,14 +10,20 @@ DATA_FILE = "data.json"
 def load_items():
     try:
         with open(DATA_FILE, "r") as file:
-            return json.load(file)
+            data = json.load(file)
+
+            return (
+                data.get("active_item", []),
+                data.get("history", [])
+            )
+            
     except:
-        return []
+        return [], []
 
 # Save items to file
 def save_items(items):
     with open(DATA_FILE, "w") as file:
-        json.dump(items, file)
+        json.dump(items, file, indent=4)
 
 # Load once when app starts
 items = load_items()

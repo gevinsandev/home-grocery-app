@@ -1,14 +1,14 @@
 <!doctype html>
 <html>
 <head>
-<link rel="stylesheet " href="/static/style.css">
+<link rel="stylesheet" href="/static/style.css">
 <title>Grocery App</title>
 </head>
 
 <body>
 
 <div class="container">
-    <h1>Grocery List</h1>
+    <h1>Grocery List 🗒️</h1>
 
     <form method="POST" action="/add">
         <input name="item" placeholder="Add item" required> 
@@ -20,9 +20,9 @@
         <li>
              <a href="/toggle/{{ loop.index0 }}">
                 {% if item.done %}
-                    <del>{{ item.name }}</del>
+                    ✅ <span class="completed">{{ item.name }}</span>
                 {% else %}
-                    {{ item.name }}
+                    ⬜ {{ item.name }}
                 {% endif %}
             </a>
 

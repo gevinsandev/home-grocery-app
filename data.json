@@ -1,1 +1,14 @@
-[{"name": "Hello", "done": false}, {"name": "Food", "done": false}]
+[
+    {
+        "name": "Soy Sauce",
+        "done": true
+    },
+    {
+        "name": "Milk Tea",
+        "done": false
+    },
+    {
+        "name": "Food",
+        "done": false
+    }
+]
